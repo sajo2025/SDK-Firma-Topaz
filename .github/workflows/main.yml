@@ -7,20 +7,21 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2019  # Usa Windows con Visual Studio preinstalado
+    runs-on: windows-2019  # Usamos Windows con Visual Studio preinstalado
 
     steps:
       - name: Clonar el repositorio
         uses: actions/checkout@v4
 
-      - name: Crear carpeta de salida
-        run: mkdir output
+      - name: Copiar la librería SigPlusNET.dll
+        run: copy SigPlusNET.dll C:\Windows\Microsoft.NET\Framework\v4.0.30319\
 
-      - name: Compilar el SDK con Visual Basic
+      - name: Compilar el SDK en Visual Basic
         run: |
-          & "C:\Windows\Microsoft.NET\Framework\v4.0.30319\vbc.exe" /target:exe /out:"output\SDK_Firma_Topaz.exe" "CapturaFirmaTopaz.vb"
+          mkdir output
+          "C:\Windows\Microsoft.NET\Framework\v4.0.30319\vbc.exe" /target:winexe /reference:SigPlusNET.dll /out:output/SDK_Firma_Topaz.exe CapturaFirmaTopaz.vb
 
-      - name: Subir el ejecutable
+      - name: Subir el ejecutable compilado
         uses: actions/upload-artifact@v4
         with:
           name: SDK_Firma_Topaz
