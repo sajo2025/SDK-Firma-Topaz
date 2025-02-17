@@ -1,0 +1,30 @@
+name: Compilar SDK VB.NET
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '4.7.2'
+
+      - name: Compilar el SDK
+        run: |
+          mkdir output
+          vbc /target:winexe /out:output/SDK_Firma_Topaz.exe CapturaFirmaTopaz.vb
+
+      - name: Subir el ejecutable
+        uses: actions/upload-artifact@v3
+        with:
+          name: SDK_Firma_Topaz
+          path: output/SDK_Firma_Topaz.exe
