@@ -18,7 +18,7 @@ jobs:
 
       - name: Compilar el SDK con Visual Basic
         run: |
-          "C:\Windows\Microsoft.NET\Framework\v4.0.30319\vbc.exe" /target:exe /out:output/SDK_Firma_Topaz.exe CapturaFirmaTopaz.vb
+          & "C:\Windows\Microsoft.NET\Framework\v4.0.30319\vbc.exe" /target:exe /out:"output\SDK_Firma_Topaz.exe" "CapturaFirmaTopaz.vb"
 
       - name: Subir el ejecutable
         uses: actions/upload-artifact@v4
